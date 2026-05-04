@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eddie Colak Studio — Boutique Web Design, Huddersfield</title>
+<meta name="description" content="Boutique web design studio based in Huddersfield. Custom WordPress and HTML websites. Transparent fixed pricing. One to one service.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Cormorant+Garamond:ital,wght@0,300;1,300&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #080808;
+  --white: #ffffff;
+  --teal: #C8860A;
+  --teal-light: #F2B93B;
+  --teal-dim: rgba(200,134,10,0.25);
+  --grey: rgba(255,255,255,0.5);
+  --grey-dim: rgba(255,255,255,0.1);
+  --grey-bg: #0d0d0d;
+  --grey-card: #111111;
+  --max: 1400px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  cursor: none;
+  overflow-x: hidden;
+}
+
+.wrap {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 60px;
+}
+
+/* CURSOR */
+.cursor-cross {
+  position: fixed; top: 0; left: 0;
+  pointer-events: none; z-index: 99999;
+  transform: translate(-50%, -50%);
+}
+.cursor-cross::before, .cursor-cross::after {
+  content: ''; position: absolute; background: var(--teal-light);
+  transition: all 0.2s ease;
+}
+.cursor-cross::before { width: 1px; height: 18px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+.cursor-cross::after { width: 18px; height: 1px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+.cursor-dot-small {
+  position: fixed; top: 0; left: 0;
+  width: 3px; height: 3px;
+  background: var(--teal-light); border-radius: 50%;
+  pointer-events: none; z-index: 99999;
+  transform: translate(-50%,-50%);
+}
+body.cur-hover .cursor-cross::before { height: 26px; opacity: 0.35; }
+body.cur-hover .cursor-cross::after { width: 26px; opacity: 0.35; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: rgba(8,8,8,0.92); backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.nav-inner {
+  max-width: var(--max); margin: 0 auto; padding: 0 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 72px;
+}
+.nav-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px; letter-spacing: 0.14em;
+  color: var(--white); text-decoration: none;
+}
+.nav-logo span { color: var(--teal-light); }
+.nav-links { display: flex; gap: 40px; list-style: none; }
+.nav-links a {
+  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--grey); text-decoration: none; transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--white); }
+.nav-cta {
+  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--white); border: 1px solid var(--teal);
+  padding: 10px 24px; text-decoration: none; transition: all 0.3s;
+}
+.nav-cta:hover { background: var(--teal); }
+
+/* HERO */
+.hero {
+  min-height: 100vh; position: relative; overflow: hidden;
+  display: flex; flex-direction: column;
+  justify-content: center;
+}
+.hero-canvas { position: absolute; inset: 0; pointer-events: none; }
+.hero-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(200,134,10,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200,134,10,0.05) 1px, transparent 1px);
+  background-size: 64px 64px;
+  animation: gridPulse 6s ease-in-out infinite;
+}
+@keyframes gridPulse { 0%,100%{opacity:0.5} 50%{opacity:1} }
+.hero-glow {
+  position: absolute; width: 800px; height: 800px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(200,134,10,0.15) 0%, transparent 65%);
+  right: -100px; top: 50%; transform: translateY(-50%);
+  animation: glowPulse 8s ease-in-out infinite;
+}
+@keyframes glowPulse { 0%,100%{transform:translateY(-50%) scale(1)} 50%{transform:translateY(-52%) scale(1.08)} }
+/* HERO CODE FRAGMENTS */
+.hero-frag {
+  position: absolute;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; line-height: 2; 
+  pointer-events: none; user-select: none;
+  white-space: pre;
+}
+.hero-frag .fline { display: block; color: rgba(255,255,255,0.1); }
+.hero-frag .fkey  { color: rgba(255,255,255,0.14); }
+.hero-frag .fval  { color: rgba(255,255,255,0.14); }
+.hero-frag .fsel  { color: rgba(255,255,255,0.14); }
+.hero-frag .fcom  { color: rgba(255,255,255,0.07); font-style: italic; }
+.hero-frag .fpunc { color: rgba(255,255,255,0.07); }
+
+/* Highlighted tokens — amber flash at staggered intervals */
+.hero-frag .hl {
+  color: rgba(242,185,59,0); 
+  background: rgba(242,185,59,0);
+  border-radius: 2px;
+  transition: none;
+}
+.hero-frag .hl.pulse {
+  animation: tokenPulse 0.6s ease-in-out forwards;
+}
+@keyframes tokenPulse {
+  0%   { color: rgba(242,185,59,0);    background: rgba(242,185,59,0); }
+  30%  { color: rgba(242,185,59,0.9);  background: rgba(242,185,59,0.08); }
+  70%  { color: rgba(242,185,59,0.9);  background: rgba(242,185,59,0.08); }
+  100% { color: rgba(242,185,59,0);    background: rgba(242,185,59,0); }
+}
+
+/* Fragment positions */
+.hero-frag-1 { right: 4%;   top: 18%; opacity: 0.85; font-size: 10.5px; }
+.hero-frag-2 { right: 26%;  top: 12%; opacity: 0.7;  font-size: 10px;   }
+.hero-frag-3 { right: 2%;   bottom: 16%; opacity: 0.75; font-size: 10px; }
+.hero-frag-4 { left: 2%;    top: 22%; opacity: 0.5;  font-size: 9.5px;  }
+.hero-frag-5 { left: 18%;   bottom: 20%; opacity: 0.55; font-size: 9.5px; }
+.hero-frag-6 { right: 42%;  top: 62%; opacity: 0.45; font-size: 9px;    }
+
+/* Left fragments hidden on small screens */
+@media (max-width: 900px) {
+  .hero-frag-4, .hero-frag-5, .hero-frag-6, .hero-frag-2 { display: none; }
+  .hero-frag-1, .hero-frag-3 { opacity: 0.35; }
+}
+
+/* Slow ambient float per fragment */
+.hero-frag-1 { animation: fFloat1 14s ease-in-out infinite; }
+.hero-frag-2 { animation: fFloat2 18s ease-in-out infinite; }
+.hero-frag-3 { animation: fFloat3 16s ease-in-out infinite; }
+.hero-frag-4 { animation: fFloat1 20s ease-in-out infinite reverse; }
+.hero-frag-5 { animation: fFloat2 22s ease-in-out infinite; }
+.hero-frag-6 { animation: fFloat3 17s ease-in-out infinite reverse; }
+
+@keyframes fFloat1 { 0%,100%{transform:translateY(0)}   50%{transform:translateY(-10px)} }
+@keyframes fFloat2 { 0%,100%{transform:translateY(0)}   50%{transform:translateY(8px)}  }
+@keyframes fFloat3 { 0%,100%{transform:translateY(0)}   50%{transform:translateY(-6px)} }
+.hero-inner {
+  position: relative; z-index: 2;
+  max-width: var(--max); margin: 0 auto; padding: 0 60px;
+  padding-top: 120px; padding-bottom: 80px;
+}
+.hero-eyebrow {
+  font-size: 10px; letter-spacing: 0.36em; text-transform: uppercase;
+  color: var(--teal-light); margin-bottom: 28px;
+  opacity: 0; animation: fadeUp 0.7s ease 0.2s forwards;
+}
+.hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(80px, 11vw, 160px);
+  line-height: 0.88; letter-spacing: 0.02em; color: var(--white);
+  opacity: 0; animation: fadeUp 0.7s ease 0.4s forwards;
+}
+.hero-title-sub {
+  display: block;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(32px, 4.2vw, 60px);
+  color: var(--teal-light); letter-spacing: 0.04em; line-height: 1.1;
+  opacity: 0; animation: fadeUp 0.7s ease 0.55s forwards;
+}
+.hero-sub {
+  font-size: 16px; line-height: 1.9; color: var(--grey);
+  max-width: 500px; margin-top: 36px; margin-bottom: 48px;
+  opacity: 0; animation: fadeUp 0.7s ease 0.7s forwards;
+}
+.hero-btns {
+  display: flex; gap: 16px;
+  opacity: 0; animation: fadeUp 0.7s ease 0.85s forwards;
+}
+.btn-primary {
+  font-size: 10px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--white); background: var(--teal);
+  padding: 14px 36px; text-decoration: none; display: inline-block; transition: all 0.3s;
+}
+.btn-primary:hover { background: var(--teal-light); box-shadow: 0 0 32px rgba(200,134,10,0.5); }
+.btn-ghost {
+  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--grey); border: 1px solid var(--grey-dim);
+  padding: 14px 36px; text-decoration: none; display: inline-block; transition: all 0.2s;
+}
+.btn-ghost:hover { color: var(--white); border-color: rgba(255,255,255,0.3); }
+.hero-scroll {
+  position: absolute; bottom: 36px; left: 60px;
+  font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: rgba(255,255,255,0.18);
+  opacity: 0; animation: fadeUp 0.7s ease 1.1s forwards;
+}
+
+/* TICKERS */
+.ticker-wrap {
+  padding: 16px 0; overflow: hidden;
+  border-top: 1px solid rgba(255,255,255,0.04);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  background: var(--grey-bg);
+}
+.ticker-track {
+  display: flex; animation: ticker 40s linear infinite; width: max-content;
+}
+.ticker-track.rev { animation: tickerRev 40s linear infinite; }
+.ticker-item {
+  font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(255,255,255,0.38); white-space: nowrap; padding: 0 24px;
+}
+.ticker-sep { color: var(--teal-light); padding: 0 4px; }
+.ticker-wrap.teal { background: var(--teal); border-color: var(--teal-light); }
+.ticker-wrap.teal .ticker-item { color: rgba(255,255,255,0.6); }
+.ticker-wrap.teal .ticker-sep { color: rgba(255,255,255,0.9); }
+
+/* ABOUT */
+.about { padding: 140px 0; }
+.about-inner {
+  max-width: var(--max); margin: 0 auto; padding: 0 60px;
+  display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 100px; align-items: start;
+}
+.about-eyebrow {
+  font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase;
+  color: var(--teal-light); margin-bottom: 20px;
+}
+.about-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(52px, 6vw, 84px); line-height: 0.92;
+  color: var(--white); margin-bottom: 36px;
+}
+.about-title em {
+  font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300;
+  color: var(--teal-light); font-size: 0.82em;
+}
+.about-body {
+  font-size: 15px; line-height: 1.9; color: var(--grey); margin-bottom: 20px;
+}
+.about-list {
+  margin-top: 32px; display: flex; flex-direction: column; gap: 14px;
+}
+.about-list-item {
+  display: flex; gap: 16px; align-items: flex-start;
+}
+.about-list-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; color: var(--teal-light); margin-top: 3px; min-width: 24px;
+}
+.about-list-text { font-size: 14px; line-height: 1.7; color: var(--grey); }
+.about-stats { display: grid; grid-template-columns: 1fr; gap: 2px; align-self: start; margin-top: 68px; }
+.about-stat {
+  background: var(--grey-card); padding: 36px 28px; position: relative;
+}
+.about-stat::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: var(--teal);
+}
+.about-stat-num {
+  font-family: 'Bebas Neue', sans-serif; font-size: 56px; line-height: 1;
+  color: var(--white); margin-bottom: 6px;
+}
+.about-stat-num sup { font-size: 24px; color: var(--teal-light); vertical-align: super; }
+.about-stat-label {
+  font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--grey);
+}
+
+/* SERVICES */
+.services {
+  padding: 120px 0;
+  background: var(--grey-bg);
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+.services-inner { max-width: var(--max); margin: 0 auto; padding: 0 60px; }
+.services-head {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; margin-bottom: 80px; align-items: end;
+}
+.services-eyebrow {
+  font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase;
+  color: var(--teal-light); margin-bottom: 20px;
+}
+.services-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(52px, 6vw, 88px); line-height: 0.9; color: var(--white);
+}
+.services-title::after {
+  content: ''; display: block; width: 40px; height: 2px;
+  background: var(--teal); margin-top: 18px;
+}
+.services-intro {
+  font-size: 15px; line-height: 1.85; color: var(--grey); margin-bottom: 20px;
+}
+.services-intro-detail {
+  font-size: 14px; line-height: 1.8; color: rgba(255,255,255,0.35);
+}
+.services-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+}
+.service-card {
+  background: var(--black); padding: 44px 36px;
+  border-left: 1px solid transparent; transition: all 0.3s;
+}
+.service-card:hover { background: #0e0e0e; border-left-color: var(--teal); }
+.service-num {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  color: var(--teal-light); opacity: 0.5; margin-bottom: 20px; display: block;
+}
+.service-name {
+  font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 0.04em;
+  color: var(--white); margin-bottom: 14px;
+}
+.service-desc { font-size: 14px; line-height: 1.8; color: var(--grey); }
+.service-tags {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-top: 20px;
+}
+.service-tag {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px;
+  color: rgba(255,255,255,0.25); border: 1px solid rgba(255,255,255,0.07);
+  padding: 4px 10px;
+}
+.tech-strip {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-top: 56px; padding-top: 40px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+.tech-badge {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  color: rgba(255,255,255,0.3); border: 1px solid rgba(255,255,255,0.07);
+  padding: 7px 14px; transition: all 0.2s;
+}
+.tech-badge:hover { color: var(--teal-light); border-color: var(--teal-dim); }
+
+/* PORTFOLIO */
+.portfolio {
+  padding: 140px 0;
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+.portfolio-inner { max-width: var(--max); margin: 0 auto; padding: 0 60px; }
+.portfolio-eyebrow {
+  font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase;
+  color: var(--teal-light); margin-bottom: 20px;
+}
+.portfolio-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(52px, 7vw, 96px); line-height: 0.9;
+  color: var(--white); margin-bottom: 80px;
+}
+.portfolio-case {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+}
+.code-preview {
+  background: #0a0a0a; border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 4px; overflow: hidden;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+  position: sticky; top: 100px;
+}
+.code-bar {
+  background: #141414; padding: 12px 18px;
+  display: flex; align-items: center; gap: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.cdot { width: 10px; height: 10px; border-radius: 50%; }
+.cdot.r { background: #ff5f57; }
+.cdot.y { background: #febc2e; }
+.cdot.g { background: #28c840; }
+.cfile {
+  margin-left: 12px; font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; color: rgba(255,255,255,0.28);
+}
+.code-body {
+  padding: 24px 24px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; line-height: 1.9;
+}
+.cl { display: flex; gap: 16px; }
+.cln { color: rgba(255,255,255,0.12); min-width: 20px; text-align: right; user-select: none; }
+.ct { color: rgba(255,255,255,0.45); }
+.c-sel { color: #d4a96a; }
+.c-pr { color: #c89b8a; }
+.c-vl { color: var(--teal-light); }
+.c-cm { color: rgba(255,255,255,0.18); font-style: italic; }
+.c-ky { color: #9eb8d4; }
+.c-nm { color: #b8a4d4; }
+.code-footer {
+  padding: 12px 18px; background: #141414;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.code-tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--teal-light); }
+.code-site { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.2); }
+
+/* CASE STUDY DETAIL */
+.case-eyebrow {
+  font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase;
+  color: var(--teal-light); margin-bottom: 12px;
+}
+.case-title {
+  font-family: 'Bebas Neue', sans-serif; font-size: 56px; letter-spacing: 0.02em;
+  color: var(--white); margin-bottom: 8px; line-height: 1;
+}
+.case-url {
+  font-family: 'JetBrains Mono', monospace; font-size: 12px;
+  color: rgba(255,255,255,0.25); margin-bottom: 32px;
+}
+.case-url a { color: var(--teal-light); text-decoration: none; }
+.case-body { font-size: 15px; line-height: 1.85; color: var(--grey); margin-bottom: 20px; }
+.case-section-title {
+  font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.1em;
+  color: var(--white); margin-top: 36px; margin-bottom: 16px;
+  padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.case-detail-list {
+  display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;
+}
+.case-detail-item {
+  font-size: 13px; line-height: 1.7; color: var(--grey);
+  padding-left: 18px; position: relative;
+}
+.case-detail-item::before {
+  content: '/'; position: absolute; left: 0; color: var(--teal-light);
+}
+.case-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 32px; margin-bottom: 32px; }
+.case-tag {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px;
+  color: var(--teal-light); border: 1px solid var(--teal-dim); padding: 5px 12px;
+}
+.case-metrics {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+  margin: 32px 0;
+}
+.case-metric {
+  background: var(--grey-card); padding: 24px 20px; text-align: center;
+  position: relative;
+}
+.case-metric::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: var(--teal);
+}
+.case-metric-num {
+  font-family: 'Bebas Neue', sans-serif; font-size: 36px; color: var(--white); line-height: 1;
+}
+.case-metric-label {
+  font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--grey); margin-top: 4px;
+}
+.case-link {
+  font-size: 10px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--white); background: var(--teal);
+  padding: 14px 32px; text-decoration: none; display: inline-block; transition: all 0.3s;
+}
+.case-link:hover { background: var(--teal-light); box-shadow: 0 0 24px rgba(200,134,10,0.5); }
+
+/* PRICING */
+.pricing {
+  padding: 140px 0; background: var(--grey-bg);
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+.pricing-inner { max-width: var(--max); margin: 0 auto; padding: 0 60px; }
+.pricing-header { text-align: center; margin-bottom: 80px; }
+.pricing-eyebrow {
+  font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase;
+  color: var(--teal-light); margin-bottom: 20px;
+}
+.pricing-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(52px, 6vw, 88px); line-height: 0.9;
+  color: var(--white); margin-bottom: 16px;
+}
+.pricing-sub {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 22px; color: var(--grey);
+}
+.pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-bottom: 2px; align-items: start; }
+.pricing-card {
+  background: var(--black); padding: 52px 44px;
+  position: relative; transition: background 0.3s;
+}
+.pricing-card:hover { background: #0c0c0c; }
+.pricing-card.featured { background: var(--black); border: 1px solid var(--teal-light); transform: translateY(-8px); box-shadow: 0 24px 80px rgba(200,134,10,0.18); }
+.pricing-card.featured:hover { background: #0f0d08; }
+.pricing-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: var(--teal);
+}
+.pricing-card.featured::before { background: var(--teal-light); height: 2px; }
+.pricing-tier {
+  font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--teal-light); margin-bottom: 20px;
+}
+.pricing-card.featured .pricing-tier { color: var(--teal-light); }
+.pricing-card.featured .pricing-tier::before { content: '★ Most Popular · '; }
+.pricing-price {
+  font-family: 'Bebas Neue', sans-serif; font-size: 72px; line-height: 1;
+  color: var(--white); margin-bottom: 4px;
+}
+.pricing-price-sub { font-size: 11px; color: var(--grey); margin-bottom: 28px; letter-spacing: 0.1em; }
+.pricing-divider { height: 1px; background: rgba(255,255,255,0.07); margin-bottom: 28px; }
+.pricing-card.featured .pricing-divider { background: rgba(200,134,10,0.25); }
+.pricing-features {
+  list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px;
+}
+.pricing-features li {
+  font-size: 13px; color: var(--grey); padding-left: 18px; position: relative;
+}
+.pricing-card.featured .pricing-features li { color: rgba(255,255,255,0.85); }
+.pricing-features li::before { content: '/'; position: absolute; left: 0; color: var(--teal-light); }
+.pricing-btn {
+  font-size: 10px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--white); background: transparent; border: 1px solid var(--teal);
+  padding: 13px 28px; text-decoration: none; display: block; text-align: center;
+  transition: all 0.3s; width: 100%;
+}
+.pricing-btn:hover { background: var(--teal); }
+.pricing-card.featured .pricing-btn { background: var(--teal); color: var(--white); border-color: var(--teal); }
+.pricing-card.featured .pricing-btn:hover { background: var(--teal-light); border-color: var(--teal-light); }
+.pricing-note {
+  background: var(--black); padding: 32px 44px;
+  display: flex; align-items: center; justify-content: space-between;
+  border: 1px solid rgba(200,134,10,0.2); margin-bottom: 2px;
+}
+.pricing-note-text { font-size: 14px; color: var(--grey); line-height: 1.7; max-width: 580px; }
+.pricing-note-hl { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: var(--teal-light); white-space: nowrap; }
+.care-block {
+  background: var(--black); padding: 56px 44px;
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 48px; align-items: center;
+}
+.care-label {
+  font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--teal-light); margin-bottom: 10px;
+}
+.care-title {
+  font-family: 'Bebas Neue', sans-serif; font-size: 32px;
+  color: var(--white); margin-bottom: 6px;
+}
+.care-price {
+  font-family: 'Bebas Neue', sans-serif; font-size: 60px;
+  color: var(--white); line-height: 1;
+}
+.care-price sup { font-size: 24px; color: var(--teal-light); vertical-align: super; }
+.care-features { display: flex; flex-direction: column; gap: 10px; }
+.care-feat {
+  font-size: 13px; color: var(--grey); padding-left: 16px; position: relative;
+}
+.care-feat::before { content: '/'; position: absolute; left: 0; color: var(--teal-light); }
+.care-note {
+  font-size: 13px; line-height: 1.75; color: rgba(255,255,255,0.3);
+  border-left: 2px solid var(--teal-dim); padding-left: 20px;
+}
+
+/* ADDITIONAL */
+.additional { padding: 120px 0; border-top: 1px solid rgba(255,255,255,0.04); }
+.additional-inner { max-width: var(--max); margin: 0 auto; padding: 0 60px; }
+.additional-eyebrow {
+  font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase;
+  color: var(--teal-light); margin-bottom: 20px;
+}
+.additional-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(48px, 6vw, 80px); line-height: 0.9;
+  color: var(--white); margin-bottom: 60px;
+}
+.additional-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+.add-card {
+  background: var(--grey-card); padding: 36px 28px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  transition: background 0.3s; position: relative; overflow: hidden;
+}
+.add-card::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+  background: var(--teal); transform: scaleX(0); transform-origin: left;
+  transition: transform 0.4s ease;
+}
+.add-card:hover { background: #161616; }
+.add-card:hover::after { transform: scaleX(1); }
+.add-title {
+  font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.04em;
+  color: var(--white); margin-bottom: 10px;
+}
+.add-desc { font-size: 13px; line-height: 1.75; color: var(--grey); margin-bottom: 16px; }
+.add-price { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--teal-light); }
+
+/* CONTACT */
+.contact {
+  padding: 140px 0; background: var(--grey-bg);
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+.contact-inner {
+  max-width: var(--max); margin: 0 auto; padding: 0 60px;
+  display: grid; grid-template-columns: 1fr 1.1fr; gap: 100px;
+}
+.contact-eyebrow {
+  font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase;
+  color: var(--teal-light); margin-bottom: 20px;
+}
+.contact-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(52px, 6vw, 80px); line-height: 0.9;
+  color: var(--white); margin-bottom: 12px;
+}
+.contact-title em {
+  font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300;
+  color: var(--teal-light); font-size: 0.58em; display: block; margin-top: 4px;
+}
+.contact-body { font-size: 15px; line-height: 1.85; color: var(--grey); margin: 24px 0 40px; }
+.contact-info { display: flex; flex-direction: column; gap: 24px; }
+.ci-label {
+  font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--teal-light); margin-bottom: 4px;
+}
+.ci-value { font-size: 14px; color: rgba(255,255,255,0.65); }
+.ci-value a { color: rgba(255,255,255,0.65); text-decoration: none; transition: color 0.2s; }
+.ci-value a:hover { color: var(--teal-light); }
+.contact-form { display: flex; flex-direction: column; gap: 14px; }
+.form-input {
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+  padding: 14px 18px; font-family: 'DM Sans', sans-serif;
+  font-size: 14px; font-weight: 300; color: var(--white); outline: none;
+  transition: border-color 0.2s; width: 100%;
+}
+.form-input:focus { border-color: var(--teal); }
+.form-input::placeholder { color: rgba(255,255,255,0.2); }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+textarea.form-input { resize: none; height: 130px; }
+.form-submit {
+  font-size: 10px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--white); background: var(--teal); border: none;
+  padding: 16px 32px; cursor: none; transition: all 0.3s; width: 100%;
+}
+.form-submit:hover { background: var(--teal-light); box-shadow: 0 0 32px rgba(200,134,10,0.5); }
+
+/* FOOTER */
+footer {
+  padding: 36px 0; border-top: 1px solid rgba(255,255,255,0.04);
+}
+.footer-inner {
+  max-width: var(--max); margin: 0 auto; padding: 0 60px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 0.14em; color: var(--white); }
+.footer-logo span { color: var(--teal-light); }
+.footer-copy { font-size: 11px; color: rgba(255,255,255,0.16); letter-spacing: 0.08em; }
+.footer-links { display: flex; gap: 28px; }
+.footer-links a {
+  font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(255,255,255,0.2); text-decoration: none; transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--teal-light); }
+
+/* TICKER DIVIDER */
+.ticker-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--teal-light) 20%, var(--teal) 50%, var(--teal-light) 80%, transparent 100%);
+  opacity: 0.35;
+}
+
+/* HAMBURGER NAV */
+.nav-hamburger {
+  display: none; flex-direction: column; gap: 5px; cursor: pointer;
+  background: none; border: none; padding: 8px;
+}
+.nav-hamburger span {
+  display: block; width: 22px; height: 1px; background: var(--white);
+  transition: all 0.3s ease;
+}
+.nav-mobile {
+  display: none; position: fixed; top: 72px; left: 0; right: 0;
+  background: rgba(8,8,8,0.98); backdrop-filter: blur(20px);
+  padding: 32px 24px; flex-direction: column; gap: 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  z-index: 999;
+}
+.nav-mobile.open { display: flex; }
+.nav-mobile a {
+  font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--grey); text-decoration: none;
+  padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+  transition: color 0.2s;
+}
+.nav-mobile a:last-child { border-bottom: none; color: var(--teal-light); }
+.nav-mobile a:hover { color: var(--white); }
+body.nav-open { overflow: hidden; }
+
+/* ANIMATIONS */
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+@keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+@keyframes tickerRev { from{transform:translateX(-50%)} to{transform:translateX(0)} }
+
+/* MOBILE */
+@media (max-width: 900px) {
+  .wrap, .nav-inner, .hero-inner, .about-inner, .services-inner,
+  .portfolio-inner, .pricing-inner, .additional-inner, .contact-inner, .footer-inner {
+    padding-left: 24px; padding-right: 24px;
+  }
+  .nav-links, .nav-cta { display: none; }
+  .hero-code { display: none; }
+  .about-inner, .services-head, .portfolio-case, .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+  .services-grid, .additional-grid { grid-template-columns: 1fr; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .pricing-card.featured { transform: none; }
+  .care-block { grid-template-columns: 1fr; }
+  .pricing-note { flex-direction: column; gap: 16px; }
+  .code-preview { position: static; }
+  .case-metrics { grid-template-columns: 1fr 1fr 1fr; }
+  .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
+  .footer-links { justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor-cross" id="cursor-cross"></div>
+<div class="cursor-dot-small" id="cursor-dot"></div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">EDDIE COLAK <span>STUDIO</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Start a Project</a>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="nav-mobile" id="nav-mobile">
+  <a href="#about" class="nav-mobile-link">About</a>
+  <a href="#services" class="nav-mobile-link">Services</a>
+  <a href="#work" class="nav-mobile-link">Work</a>
+  <a href="#pricing" class="nav-mobile-link">Pricing</a>
+  <a href="#contact" class="nav-mobile-link">Contact</a>
+  <a href="#contact" class="nav-mobile-link">Start a Project →</a>
+</div>
+
+<section class="hero">
+  <div class="hero-canvas">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+
+    <!-- Fragment 1: CSS custom properties / variables — top right -->
+    <div class="hero-frag hero-frag-1">
+<span class="fline"><span class="fsel">:root</span><span class="fpunc"> {</span></span>
+<span class="fline">  <span class="fkey">--brand</span><span class="fpunc">:</span> <span class="fval hl" id="hl-f1-1">#F2B93B</span><span class="fpunc">;</span></span>
+<span class="fline">  <span class="fkey">--dark</span><span class="fpunc">:</span>  <span class="fval">#080808</span><span class="fpunc">;</span></span>
+<span class="fline">  <span class="fkey">--max</span><span class="fpunc">:</span>   <span class="fval hl" id="hl-f1-2">1400px</span><span class="fpunc">;</span></span>
+<span class="fline">  <span class="fkey">--ease</span><span class="fpunc">:</span>  <span class="fval">cubic-bezier(</span></span>
+<span class="fline">            <span class="fval hl" id="hl-f1-3">0.4, 0, 0.2, 1</span><span class="fpunc">);</span></span>
+<span class="fline"><span class="fpunc">}</span></span>
+<span class="fline"> </span>
+<span class="fline"><span class="fsel">.hero-title</span><span class="fpunc"> {</span></span>
+<span class="fline">  <span class="fkey">font-size</span><span class="fpunc">:</span> <span class="fval">clamp(</span><span class="fval hl" id="hl-f1-4">80px</span><span class="fpunc">,</span></span>
+<span class="fline">             <span class="fval">11vw</span><span class="fpunc">,</span> <span class="fval">160px</span><span class="fpunc">);</span></span>
+<span class="fline">  <span class="fkey">line-height</span><span class="fpunc">:</span> <span class="fval">0.88</span><span class="fpunc">;</span></span>
+<span class="fline"><span class="fpunc">}</span></span>
+    </div>
+
+    <!-- Fragment 2: JavaScript animation function — top centre-right -->
+    <div class="hero-frag hero-frag-2">
+<span class="fline"><span class="fcom">// Intersection observer for scroll reveals</span></span>
+<span class="fline"><span class="fkey">const</span> <span class="fval hl" id="hl-f2-1">observer</span> <span class="fpunc">=</span> <span class="fkey">new</span> <span class="fval">IntersectionObserver</span><span class="fpunc">(</span></span>
+<span class="fline">  <span class="fpunc">(</span><span class="fval">entries</span><span class="fpunc">) => {</span></span>
+<span class="fline">    <span class="fval">entries</span><span class="fpunc">.</span><span class="fval hl" id="hl-f2-2">forEach</span><span class="fpunc">(</span><span class="fval">entry</span> <span class="fpunc">=></span> <span class="fpunc">{</span></span>
+<span class="fline">      <span class="fkey">if</span> <span class="fpunc">(</span><span class="fval">entry</span><span class="fpunc">.</span><span class="fval hl" id="hl-f2-3">isIntersecting</span><span class="fpunc">) {</span></span>
+<span class="fline">        <span class="fval">entry</span><span class="fpunc">.</span><span class="fval">target</span></span>
+<span class="fline">          <span class="fpunc">.</span><span class="fval">classList</span><span class="fpunc">.</span><span class="fval hl" id="hl-f2-4">add</span><span class="fpunc">(</span><span class="fval">'visible'</span><span class="fpunc">);</span></span>
+<span class="fline">      <span class="fpunc">}</span></span>
+<span class="fline">    <span class="fpunc">});</span></span>
+<span class="fline">  <span class="fpunc">},</span> <span class="fpunc">{</span> <span class="fkey">threshold</span><span class="fpunc">:</span> <span class="fval">0.2</span> <span class="fpunc">}</span></span>
+<span class="fline"><span class="fpunc">);</span></span>
+    </div>
+
+    <!-- Fragment 3: Responsive grid + clip-path — bottom right -->
+    <div class="hero-frag hero-frag-3">
+<span class="fline"><span class="fsel">.genre-block</span><span class="fpunc"> {</span></span>
+<span class="fline">  <span class="fkey">clip-path</span><span class="fpunc">:</span> <span class="fval hl" id="hl-f3-1">polygon(</span></span>
+<span class="fline">    <span class="fval">0 0</span><span class="fpunc">,</span>    <span class="fval">100% 0</span><span class="fpunc">,</span></span>
+<span class="fline">    <span class="fval hl" id="hl-f3-2">85% 100%</span><span class="fpunc">,</span> <span class="fval">0 100%</span></span>
+<span class="fline">  <span class="fpunc">);</span></span>
+<span class="fline">  <span class="fkey">transition</span><span class="fpunc">:</span> <span class="fval">clip-path</span></span>
+<span class="fline">    <span class="fval hl" id="hl-f3-3">0.4s</span> <span class="fval">ease</span><span class="fpunc">;</span></span>
+<span class="fline"><span class="fpunc">}</span></span>
+<span class="fline"> </span>
+<span class="fline"><span class="fsel">@media</span> <span class="fpunc">(</span><span class="fkey">max-width</span><span class="fpunc">:</span> <span class="fval hl" id="hl-f3-4">768px</span><span class="fpunc">) {</span></span>
+<span class="fline">  <span class="fsel">.grid</span><span class="fpunc"> {</span></span>
+<span class="fline">    <span class="fkey">grid-template-columns</span><span class="fpunc">:</span></span>
+<span class="fline">      <span class="fval hl" id="hl-f3-5">1fr</span><span class="fpunc">;</span></span>
+<span class="fline">  <span class="fpunc">}</span></span>
+<span class="fline"><span class="fpunc">}</span></span>
+    </div>
+
+    <!-- Fragment 4: Keyframe animation — left side -->
+    <div class="hero-frag hero-frag-4">
+<span class="fline"><span class="fsel">@keyframes</span> <span class="fval hl" id="hl-f4-1">fadeUp</span> <span class="fpunc">{</span></span>
+<span class="fline">  <span class="fval">from</span> <span class="fpunc">{</span></span>
+<span class="fline">    <span class="fkey">opacity</span><span class="fpunc">:</span>   <span class="fval hl" id="hl-f4-2">0</span><span class="fpunc">;</span></span>
+<span class="fline">    <span class="fkey">transform</span><span class="fpunc">:</span> <span class="fval hl" id="hl-f4-3">translateY(24px)</span><span class="fpunc">;</span></span>
+<span class="fline">  <span class="fpunc">}</span></span>
+<span class="fline">  <span class="fval">to</span> <span class="fpunc">{</span></span>
+<span class="fline">    <span class="fkey">opacity</span><span class="fpunc">:</span>   <span class="fval">1</span><span class="fpunc">;</span></span>
+<span class="fline">    <span class="fkey">transform</span><span class="fpunc">:</span> <span class="fval">translateY(0)</span><span class="fpunc">;</span></span>
+<span class="fline">  <span class="fpunc">}</span></span>
+<span class="fline"><span class="fpunc">}</span></span>
+    </div>
+
+    <!-- Fragment 5: WordPress custom JS — bottom left -->
+    <div class="hero-frag hero-frag-5">
+<span class="fline"><span class="fcom">// Custom calendar — vanilla JS, no plugins</span></span>
+<span class="fline"><span class="fkey">const</span> <span class="fval hl" id="hl-f5-1">renderCalendar</span> <span class="fpunc">= () => {</span></span>
+<span class="fline">  <span class="fkey">const</span> <span class="fval">days</span> <span class="fpunc">= [</span></span>
+<span class="fline">    <span class="fval hl" id="hl-f5-2">'Mon'</span><span class="fpunc">,</span><span class="fval">'Tue'</span><span class="fpunc">,</span><span class="fval">'Wed'</span><span class="fpunc">,</span></span>
+<span class="fline">    <span class="fval">'Thu'</span><span class="fpunc">,</span><span class="fval">'Fri'</span><span class="fpunc">,</span><span class="fval">'Sat'</span><span class="fpunc">,</span><span class="fval">'Sun'</span></span>
+<span class="fline">  <span class="fpunc">];</span></span>
+<span class="fline">  <span class="fval">days</span><span class="fpunc">.</span><span class="fval hl" id="hl-f5-3">forEach</span><span class="fpunc">(</span><span class="fval">day</span> <span class="fpunc">=></span></span>
+<span class="fline">    <span class="fval">buildDayColumn</span><span class="fpunc">(</span><span class="fval hl" id="hl-f5-4">day</span><span class="fpunc">)</span></span>
+<span class="fline">  <span class="fpunc">);</span></span>
+<span class="fline"><span class="fpunc">};</span></span>
+    </div>
+
+    <!-- Fragment 6: Scroll animation trigger — mid background -->
+    <div class="hero-frag hero-frag-6">
+<span class="fline"><span class="fsel">.reveal</span><span class="fpunc"> {</span></span>
+<span class="fline">  <span class="fkey">opacity</span><span class="fpunc">:</span>    <span class="fval hl" id="hl-f6-1">0</span><span class="fpunc">;</span></span>
+<span class="fline">  <span class="fkey">transform</span><span class="fpunc">:</span> <span class="fval">translateY(</span><span class="fval hl" id="hl-f6-2">32px</span><span class="fpunc">);</span></span>
+<span class="fline">  <span class="fkey">transition</span><span class="fpunc">:</span> <span class="fval">all</span> <span class="fval hl" id="hl-f6-3">0.7s</span> <span class="fval">ease</span><span class="fpunc">;</span></span>
+<span class="fline"><span class="fpunc">}</span></span>
+<span class="fline"><span class="fsel">.reveal.visible</span><span class="fpunc"> {</span></span>
+<span class="fline">  <span class="fkey">opacity</span><span class="fpunc">:</span>    <span class="fval hl" id="hl-f6-4">1</span><span class="fpunc">;</span></span>
+<span class="fline">  <span class="fkey">transform</span><span class="fpunc">:</span> <span class="fval">translateY(0)</span><span class="fpunc">;</span></span>
+<span class="fline"><span class="fpunc">}</span></span>
+    </div>
+
+  </div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Boutique Web Design Studio · Huddersfield, West Yorkshire</div>
+    <h1 class="hero-title">
+      BUILT TO IMPRESS.
+      <span class="hero-title-sub">Every pixel.</span>
+    </h1>
+    <p class="hero-sub">Full accountability. Fixed pricing. No account managers, no handoffs, no surprises. Just one person who builds, tests, launches and stands behind every website they produce.</p>
+    <div class="hero-btns">
+      <a href="#work" class="btn-primary">View Our Work</a>
+      <a href="#pricing" class="btn-ghost">See Pricing</a>
+    </div>
+  </div>
+  <div class="hero-scroll">Scroll to explore</div>
+</section>
+
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <span class="ticker-item">5 Years Web Design Experience</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">One to One Client Service</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">HTML · CSS · JavaScript</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">2 Revision Rounds Included</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">WordPress and Custom HTML Builds</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">Full Aftercare and Support</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">Mobile Optimised as Standard</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">Transparent Fixed Pricing</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">UK Based · Huddersfield</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">Hosted on UK Servers</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">No Hidden Fees. Ever.</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">Instagram Integration</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">SEO Ready on Launch Day</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">Security and Backups Included</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">Custom Animations</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">5 Years Web Design Experience</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">One to One Client Service</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">HTML · CSS · JavaScript</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">2 Revision Rounds Included</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">WordPress and Custom HTML Builds</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">Full Aftercare and Support</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">Mobile Optimised as Standard</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">Transparent Fixed Pricing</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">UK Based · Huddersfield</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">Hosted on UK Servers</span><span class="ticker-sep"> · </span>
+    <span class="ticker-item">No Hidden Fees. Ever.</span><span class="ticker-sep"> · </span>
+  </div>
+</div>
+
+<div class="ticker-divider"></div>
+
+<section class="about" id="about">
+  <div class="about-inner">
+    <div>
+      <div class="about-eyebrow">About the Studio</div>
+      <h2 class="about-title">BOUTIQUE STUDIO.<br><em>Your project, personally.</em></h2>
+      <p class="about-body">Eddie Colak Studio is a boutique web design studio based in Huddersfield, West Yorkshire. Every project is handled personally from the first conversation to the final handover. When you work with Eddie Colak Studio, you deal directly with the person building your site. No account managers, no handoffs, no surprises.</p>
+      <p class="about-body">The studio specialises in custom WordPress builds and hand-coded HTML sites. Every website is built from scratch — no template purchases, no off-the-shelf themes. The result is a site that looks like your business, not like everyone else's.</p>
+      <div class="about-list">
+        <div class="about-list-item">
+          <span class="about-list-num">01</span>
+          <span class="about-list-text">I only build websites I would be proud to put my name on. Quality is non-negotiable on every project regardless of budget.</span>
+        </div>
+        <div class="about-list-item">
+          <span class="about-list-num">02</span>
+          <span class="about-list-text">Pricing is fixed and published upfront. The quote you receive is the price you pay. No scope creep, no hidden extras.</span>
+        </div>
+        <div class="about-list-item">
+          <span class="about-list-num">03</span>
+          <span class="about-list-text">Every site is built mobile-first, security hardened on launch day and backed up automatically every week.</span>
+        </div>
+        <div class="about-list-item">
+          <span class="about-list-num">04</span>
+          <span class="about-list-text">I work with a small number of clients at a time. Your project gets full attention, not a slot in a production queue.</span>
+        </div>
+      </div>
+    </div>
+    <div class="about-stats">
+      <div class="about-stat">
+        <div class="about-stat-num">5<sup>+</sup></div>
+        <div class="about-stat-label">Years Experience</div>
+      </div>
+      <div class="about-stat">
+        <div class="about-stat-num">100<sup>%</sup></div>
+        <div class="about-stat-label">Client Satisfaction</div>
+      </div>
+      <div class="about-stat">
+        <div class="about-stat-num">2</div>
+        <div class="about-stat-label">Revision Rounds</div>
+      </div>
+      <div class="about-stat">
+        <div class="about-stat-num">1<sup>:1</sup></div>
+        <div class="about-stat-label">Direct Service</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="services-inner">
+    <div class="services-head">
+      <div>
+        <div class="services-eyebrow">What We Build</div>
+        <h2 class="services-title">WHAT WE<br>DELIVER</h2>
+      </div>
+      <div>
+        <p class="services-intro">Every website is custom built to your brief. We do not use pre-bought templates or generic themes. The design starts from scratch, the code is written by hand and the result is a site that is genuinely yours.</p>
+        <p class="services-intro-detail" style="margin-top:16px;">We work exclusively with WordPress and Elementor for content-managed sites, and hand-coded HTML for portfolio and single-page builds. Both approaches are hosted on Krystal UK servers with Wordfence security and weekly automated backups included as standard on every project.</p>
+      </div>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <span class="service-num">// 01</span>
+        <div class="service-name">WORDPRESS WEBSITES</div>
+        <p class="service-desc">Custom WordPress builds using Hello Elementor as the base theme. Fully styled to your brand, fully functional and built so you can manage your own content without needing to touch any code. Plugins are selected for purpose, not convenience.</p>
+        <div class="service-tags">
+          <span class="service-tag">WordPress</span>
+          <span class="service-tag">Elementor</span>
+          <span class="service-tag">WPCode</span>
+          <span class="service-tag">Shortcoder</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <span class="service-num">// 02</span>
+        <div class="service-name">CUSTOM HTML BUILDS</div>
+        <p class="service-desc">Hand coded HTML, CSS and JavaScript for portfolio sites, landing pages or single-page builds where design precision and load speed matter most. No plugins, no bloat, no compromise on performance or visual quality.</p>
+        <div class="service-tags">
+          <span class="service-tag">HTML5</span>
+          <span class="service-tag">CSS3</span>
+          <span class="service-tag">JavaScript</span>
+          <span class="service-tag">GitHub Pages</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <span class="service-num">// 03</span>
+        <div class="service-name">MOBILE OPTIMISATION</div>
+        <p class="service-desc">Every site is built mobile-first and tested across real devices before launch. Responsive breakpoints, touch-friendly navigation, fast loading images and legible typography at every screen size. Not an afterthought.</p>
+        <div class="service-tags">
+          <span class="service-tag">Responsive CSS</span>
+          <span class="service-tag">Mobile Testing</span>
+          <span class="service-tag">Touch UX</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <span class="service-num">// 04</span>
+        <div class="service-name">SEO SETUP</div>
+        <p class="service-desc">Every site launches with Yoast SEO fully configured. Focus keyphrases, SEO titles and meta descriptions written for every page, XML sitemap generated and submitted to Google Search Console on launch day.</p>
+        <div class="service-tags">
+          <span class="service-tag">Yoast SEO</span>
+          <span class="service-tag">Search Console</span>
+          <span class="service-tag">Meta Tags</span>
+          <span class="service-tag">Sitemaps</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <span class="service-num">// 05</span>
+        <div class="service-name">INTEGRATIONS</div>
+        <p class="service-desc">Live Instagram feeds, booking calendars, WhatsApp click-to-chat, contact forms, social media links, Google Maps. If your business needs it connecting, it gets connected properly and tested before launch.</p>
+        <div class="service-tags">
+          <span class="service-tag">Instagram API</span>
+          <span class="service-tag">WhatsApp</span>
+          <span class="service-tag">WPForms</span>
+          <span class="service-tag">Smash Balloon</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <span class="service-num">// 06</span>
+        <div class="service-name">SECURITY AND BACKUPS</div>
+        <p class="service-desc">Wordfence firewall and malware scanner installed and configured on every WordPress site. Weekly automated backups to Google Drive via UpdraftPlus. UK-based Krystal hosting with Imunify360 server-level protection.</p>
+        <div class="service-tags">
+          <span class="service-tag">Wordfence</span>
+          <span class="service-tag">UpdraftPlus</span>
+          <span class="service-tag">Imunify360</span>
+          <span class="service-tag">Krystal</span>
+        </div>
+      </div>
+    </div>
+    <div class="tech-strip">
+      <div class="tech-badge">HTML5</div>
+      <div class="tech-badge">CSS3</div>
+      <div class="tech-badge">JavaScript</div>
+      <div class="tech-badge">PHP</div>
+      <div class="tech-badge">WordPress</div>
+      <div class="tech-badge">Elementor</div>
+      <div class="tech-badge">Krystal Hosting</div>
+      <div class="tech-badge">Wordfence</div>
+      <div class="tech-badge">UpdraftPlus</div>
+      <div class="tech-badge">Yoast SEO</div>
+      <div class="tech-badge">Smash Balloon</div>
+      <div class="tech-badge">WPCode</div>
+      <div class="tech-badge">Shortcoder</div>
+      <div class="tech-badge">GitHub Pages</div>
+    </div>
+  </div>
+</section>
+
+<section class="portfolio" id="work">
+  <div class="portfolio-inner">
+    <div class="portfolio-eyebrow">Our Work</div>
+    <h2 class="portfolio-title">RECENT WORK</h2>
+    <div class="portfolio-case">
+      <div class="code-preview">
+        <div class="code-bar">
+          <div class="cdot r"></div>
+          <div class="cdot y"></div>
+          <div class="cdot g"></div>
+          <div class="cfile">kt-dance-homepage.css</div>
+        </div>
+        <div class="code-body">
+          <div class="cl"><span class="cln">1</span><span class="ct"><span class="c-cm">/* KT Dance Company — Custom Build */</span></span></div>
+          <div class="cl"><span class="cln">2</span><span class="ct"><span class="c-sel">.kth-wrap</span> {</span></div>
+          <div class="cl"><span class="cln">3</span><span class="ct">&nbsp;&nbsp;<span class="c-pr">position</span>: <span class="c-vl">relative</span>;</span></div>
+          <div class="cl"><span class="cln">4</span><span class="ct">&nbsp;&nbsp;<span class="c-pr">width</span>: <span class="c-nm">100vw</span>;</span></div>
+          <div class="cl"><span class="cln">5</span><span class="ct">&nbsp;&nbsp;<span class="c-pr">height</span>: <span class="c-nm">100vh</span>;</span></div>
+          <div class="cl"><span class="cln">6</span><span class="ct">&nbsp;&nbsp;<span class="c-pr">overflow</span>: <span class="c-vl">hidden</span>;</span></div>
+          <div class="cl"><span class="cln">7</span><span class="ct">}</span></div>
+          <div class="cl"><span class="cln">8</span><span class="ct"></span></div>
+          <div class="cl"><span class="cln">9</span><span class="ct"><span class="c-sel">.kt-genre-block</span> {</span></div>
+          <div class="cl"><span class="cln">10</span><span class="ct">&nbsp;&nbsp;<span class="c-pr">clip-path</span>: <span class="c-vl">polygon(</span></span></div>
+          <div class="cl"><span class="cln">11</span><span class="ct">&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-nm">0 0</span>, <span class="c-nm">100% 0</span>,</span></div>
+          <div class="cl"><span class="cln">12</span><span class="ct">&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-nm">85% 100%</span>, <span class="c-nm">0 100%</span></span></div>
+          <div class="cl"><span class="cln">13</span><span class="ct">&nbsp;&nbsp;);</span></div>
+          <div class="cl"><span class="cln">14</span><span class="ct">}</span></div>
+          <div class="cl"><span class="cln">15</span><span class="ct"></span></div>
+          <div class="cl"><span class="cln">16</span><span class="ct"><span class="c-cm">/* Interactive weekly calendar */</span></span></div>
+          <div class="cl"><span class="cln">17</span><span class="ct"><span class="c-ky">const</span> renderCalendar = () => {</span></div>
+          <div class="cl"><span class="cln">18</span><span class="ct">&nbsp;&nbsp;<span class="c-ky">const</span> days = [<span class="c-vl">'Mon'</span>,<span class="c-vl">'Tue'</span>,</span></div>
+          <div class="cl"><span class="cln">19</span><span class="ct">&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-vl">'Wed'</span>,<span class="c-vl">'Thu'</span>,<span class="c-vl">'Fri'</span>,</span></div>
+          <div class="cl"><span class="cln">20</span><span class="ct">&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-vl">'Sat'</span>,<span class="c-vl">'Sun'</span>];</span></div>
+          <div class="cl"><span class="cln">21</span><span class="ct">&nbsp;&nbsp;days.forEach(day => {</span></div>
+          <div class="cl"><span class="cln">22</span><span class="ct">&nbsp;&nbsp;&nbsp;&nbsp;buildDayColumn(day);</span></div>
+          <div class="cl"><span class="cln">23</span><span class="ct">&nbsp;&nbsp;});</span></div>
+          <div class="cl"><span class="cln">24</span><span class="ct">};</span></div>
+        </div>
+        <div class="code-footer">
+          <span class="code-tag">// ktdanceacademy.co.uk</span>
+          <span class="code-site">WordPress · Custom CSS/JS</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="case-eyebrow">Case Study 01</div>
+        <h3 class="case-title">KT DANCE COMPANY</h3>
+        <div class="case-url">ktdanceacademy.co.uk &nbsp;·&nbsp; <a href="https://ktdanceacademy.co.uk" target="_blank">View live site</a></div>
+
+        <p class="case-body">KT Dance Company is one of Huddersfield's leading dance schools, offering nine disciplines across junior, intermediate and senior levels. The brief was clear: build something that looked as serious and professional as the studio's reputation. Nothing on the market matched the existing competition.</p>
+
+        <div class="case-section-title">THE BRIEF</div>
+        <div class="case-detail-list">
+          <div class="case-detail-item">A fully custom dark-themed site that reflected the studio's premium competition record</div>
+          <div class="case-detail-item">An interactive weekly class schedule showing both studio spaces across all seven days</div>
+          <div class="case-detail-item">A live Instagram feed pulling from the studio's social account automatically</div>
+          <div class="case-detail-item">A competition showcase section covering world championship qualifications and regional results</div>
+          <div class="case-detail-item">Full teacher profiles with headshots, specialisms and professional bios</div>
+          <div class="case-detail-item">A booking enquiry form delivered direct to the principal's inbox</div>
+        </div>
+
+        <div class="case-section-title">WHAT WAS BUILT</div>
+        <div class="case-detail-list">
+          <div class="case-detail-item">Six fully custom pages built in WordPress with Hello Elementor and Elementor Free</div>
+          <div class="case-detail-item">A full-screen video hero with animated overlays, custom logo and dual CTA buttons</div>
+          <div class="case-detail-item">A bespoke interactive calendar built entirely in vanilla JavaScript with dual studio support and popup class detail view</div>
+          <div class="case-detail-item">Five diagonal genre blocks with custom clip-path CSS, animated on hover</div>
+          <div class="case-detail-item">Live Instagram gallery feed via Smash Balloon connected to the studio's account</div>
+          <div class="case-detail-item">A world championship showcase section covering the Dance World Cup, TDCI World Performer and TDCI British Championships</div>
+          <div class="case-detail-item">A scrolling testimonials strip built with real client reviews and a seamless CSS loop animation</div>
+          <div class="case-detail-item">Seven teacher cards with real headshots, specialism labels and professional bios</div>
+          <div class="case-detail-item">Custom WPCode CSS snippets managing all styling across the site with zero theme bloat</div>
+          <div class="case-detail-item">Full Yoast SEO configuration across all six pages with sitemap submission on launch day</div>
+        </div>
+
+        <div class="case-section-title">TECHNICAL CHALLENGES</div>
+        <div class="case-detail-list">
+          <div class="case-detail-item">Shortcoder character limits required migrating the Competitions page to a direct Elementor HTML widget mid-build</div>
+          <div class="case-detail-item">A server-level hack was discovered and resolved during the build — malicious files were removed, fake admin accounts deleted, Wordfence installed and the site restored from a clean JetBackups snapshot</div>
+          <div class="case-detail-item">The interactive calendar required custom JavaScript to handle dual studio scheduling, day-by-day popups and mobile responsiveness without any plugin dependency</div>
+        </div>
+
+        <div class="case-metrics">
+          <div class="case-metric">
+            <div class="case-metric-num">6</div>
+            <div class="case-metric-label">Custom Pages</div>
+          </div>
+          <div class="case-metric">
+            <div class="case-metric-num">7</div>
+            <div class="case-metric-label">Teachers Profiled</div>
+          </div>
+          <div class="case-metric">
+            <div class="case-metric-num">9</div>
+            <div class="case-metric-label">Disciplines</div>
+          </div>
+        </div>
+
+        <div class="case-tags">
+          <span class="case-tag">WordPress</span>
+          <span class="case-tag">Custom CSS / JS</span>
+          <span class="case-tag">Instagram Integration</span>
+          <span class="case-tag">Interactive Calendar</span>
+          <span class="case-tag">Mobile Optimised</span>
+          <span class="case-tag">Full SEO Setup</span>
+          <span class="case-tag">Security Hardened</span>
+          <span class="case-tag">Wordfence</span>
+        </div>
+
+        <a href="https://ktdanceacademy.co.uk" target="_blank" class="case-link">View Live Site</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pricing" id="pricing">
+  <div class="pricing-inner">
+    <div class="pricing-header">
+      <div class="pricing-eyebrow">Transparent Pricing</div>
+      <h2 class="pricing-title">FIXED PRICES.<br>NO SURPRISES.</h2>
+      <p class="pricing-sub">What you see is what you pay. No hidden fees, no scope creep.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="pricing-tier">Starter</div>
+        <div class="pricing-price">£600</div>
+        <div class="pricing-price-sub">One-off fixed fee</div>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li>Up to 3 pages</li>
+          <li>Custom design, no templates</li>
+          <li>Contact form</li>
+          <li>Mobile responsive</li>
+          <li>Basic SEO setup</li>
+          <li>2 revision rounds</li>
+          <li>30 day aftercare included</li>
+        </ul>
+        <a href="#contact" class="pricing-btn">Get Started</a>
+      </div>
+      <div class="pricing-card featured">
+        <div class="pricing-tier">Standard</div>
+        <div class="pricing-price">£900</div>
+        <div class="pricing-price-sub">One-off fixed fee</div>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li>Up to 5 pages</li>
+          <li>Custom design, no templates</li>
+          <li>Booking or calendar system</li>
+          <li>Social media integration</li>
+          <li>Basic SEO setup</li>
+          <li>2 revision rounds</li>
+          <li>30 day aftercare included</li>
+        </ul>
+        <a href="#contact" class="pricing-btn">Get Started</a>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-tier">Premium</div>
+        <div class="pricing-price">£1,200</div>
+        <div class="pricing-price-sub">One-off fixed fee</div>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li>Unlimited pages</li>
+          <li>Full custom build</li>
+          <li>Custom animations and interactions</li>
+          <li>Advanced integrations</li>
+          <li>Full SEO setup</li>
+          <li>2 revision rounds</li>
+          <li>60 day aftercare included</li>
+        </ul>
+        <a href="#contact" class="pricing-btn">Get Started</a>
+      </div>
+    </div>
+    <div class="pricing-note">
+      <p class="pricing-note-text">Aftercare covers bug fixes, content tweaks and technical support for the included period. Once aftercare ends, keep your site protected and up to date with a monthly care package. No contract, cancel any time.</p>
+    </div>
+    <div class="care-block">
+      <div>
+        <div class="care-label">Monthly Care Package</div>
+        <div class="care-title">Keep it running.<br>Keep it secure.</div>
+        <div class="care-price">£75<sup>/mo</sup></div>
+      </div>
+      <div class="care-features">
+        <div class="care-feat">Monthly Wordfence security scan</div>
+        <div class="care-feat">WordPress core and plugin updates</div>
+        <div class="care-feat">Weekly automated backups to Google Drive</div>
+        <div class="care-feat">Content updates on request</div>
+        <div class="care-feat">Priority support response</div>
+      </div>
+      <div class="care-note">The care package picks up where your aftercare period ends. Most clients stay on it. Your site stays secure, updated and running without you having to think about it.</div>
+    </div>
+  </div>
+</section>
+
+<section class="additional" id="additional">
+  <div class="additional-inner">
+    <div class="additional-eyebrow">Additional Services</div>
+    <h2 class="additional-title">EVERYTHING<br>YOU NEED</h2>
+    <div class="additional-grid">
+      <div class="add-card">
+        <div class="add-title">DOMAIN MIGRATION</div>
+        <p class="add-desc">Moving from an old domain to a new one. Full DNS configuration, WordPress URL updates, redirect setup and complete site testing before and after cutover.</p>
+        <div class="add-price">£150</div>
+      </div>
+      <div class="add-card">
+        <div class="add-title">HOSTING SETUP</div>
+        <p class="add-desc">Full Krystal shared hosting setup, WordPress installation, SSL certificate configuration, Wordfence installation and initial security hardening.</p>
+        <div class="add-price">£100</div>
+      </div>
+      <div class="add-card">
+        <div class="add-title">SEO AUDIT</div>
+        <p class="add-desc">Full Yoast SEO configuration across all pages, focus keyphrases, SEO titles, meta descriptions and XML sitemap submitted to Google Search Console.</p>
+        <div class="add-price">£150</div>
+      </div>
+      <div class="add-card">
+        <div class="add-title">SECURITY CLEAN</div>
+        <p class="add-desc">Malware removal, infected file identification and deletion, fake admin account removal, password reset and Wordfence firewall installation and configuration.</p>
+        <div class="add-price">£200</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div>
+      <div class="contact-eyebrow">Start a Project</div>
+      <h2 class="contact-title">
+        LET'S TALK
+        <em>tell me what you need.</em>
+      </h2>
+      <p class="contact-body">No sales pitch. No obligation. Just a straight conversation about what you need and whether I can help. Fill in the form or reach out directly and I will get back to you the same day.</p>
+      <div class="contact-info">
+        <div>
+          <div class="ci-label">Based in</div>
+          <div class="ci-value">Huddersfield, West Yorkshire</div>
+        </div>
+        <div>
+          <div class="ci-label">Email</div>
+          <div class="ci-value"><a href="mailto:hello@eddiecolakstudio.com">hello@eddiecolakstudio.com</a></div>
+        </div>
+        <div>
+          <div class="ci-label">WhatsApp</div>
+          <div class="ci-value"><a href="https://wa.me/447711577736">Message on WhatsApp</a></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <form class="contact-form" id="contact-form" action="https://formspree.io/f/eddie.rogers12@outlook.com" method="POST">
+        <div class="form-row">
+          <input type="text" name="name" class="form-input" placeholder="Your name" required>
+          <input type="email" name="email" class="form-input" placeholder="Email address" required>
+        </div>
+        <input type="text" name="business" class="form-input" placeholder="Business name">
+        <input type="text" name="website" class="form-input" placeholder="Website (if you have one)">
+        <textarea name="message" class="form-input" placeholder="Tell me about your project" required></textarea>
+        <button type="submit" class="form-submit" id="form-submit">Send Message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">EDDIE COLAK <span>STUDIO</span></div>
+    <div class="footer-copy">2026 Eddie Colak Studio. All rights reserved.</div>
+    <div class="footer-links">
+      <a href="https://ktdanceacademy.co.uk" target="_blank">KT Dance Company</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const cross = document.getElementById('cursor-cross');
+const dot = document.getElementById('cursor-dot');
+let mx = 0, my = 0;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+  cross.style.left = mx + 'px'; cross.style.top = my + 'px';
+});
+document.querySelectorAll('a,button,.service-card,.pricing-card,.add-card').forEach(el => {
+  el.addEventListener('mouseenter', () => document.body.classList.add('cur-hover'));
+  el.addEventListener('mouseleave', () => document.body.classList.remove('cur-hover'));
+});
+// Contact form — Formspree submission
+const contactForm = document.getElementById('contact-form');
+const formSubmitBtn = document.getElementById('form-submit');
+if (contactForm) {
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    formSubmitBtn.textContent = 'Sending...';
+    formSubmitBtn.disabled = true;
+    try {
+      const res = await fetch(contactForm.action, {
+        method: 'POST',
+        body: new FormData(contactForm),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        contactForm.innerHTML = '<p style="text-align:center;padding:48px 0;font-family:\'Bebas Neue\',sans-serif;font-size:28px;color:#F2B93B;letter-spacing:0.1em;">MESSAGE SENT. I\'LL BE IN TOUCH SOON.</p>';
+      } else {
+        formSubmitBtn.textContent = 'Send Message';
+        formSubmitBtn.disabled = false;
+        alert('Something went wrong. Please email eddie.rogers12@outlook.com directly.');
+      }
+    } catch {
+      formSubmitBtn.textContent = 'Send Message';
+      formSubmitBtn.disabled = false;
+      alert('Something went wrong. Please email eddie.rogers12@outlook.com directly.');
+    }
+  });
+}
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) t.scrollIntoView({ behavior: 'smooth' });
+    // Close mobile menu on nav link click
+    navMobile.classList.remove('open');
+    document.body.classList.remove('nav-open');
+  });
+});
+// Staggered token highlight system
+const hlTokens = [
+  'hl-f1-1','hl-f1-2','hl-f1-3','hl-f1-4',
+  'hl-f2-1','hl-f2-2','hl-f2-3','hl-f2-4',
+  'hl-f3-1','hl-f3-2','hl-f3-3','hl-f3-4','hl-f3-5',
+  'hl-f4-1','hl-f4-2','hl-f4-3',
+  'hl-f5-1','hl-f5-2','hl-f5-3','hl-f5-4',
+  'hl-f6-1','hl-f6-2','hl-f6-3','hl-f6-4'
+];
+
+function fireToken(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.remove('pulse');
+  void el.offsetWidth; // reflow to restart animation
+  el.classList.add('pulse');
+  el.addEventListener('animationend', () => el.classList.remove('pulse'), { once: true });
+}
+
+function scheduleHighlights() {
+  // Fire 2-3 tokens at a time, then wait a random gap
+  const count = Math.random() < 0.4 ? 3 : 2;
+  const shuffled = [...hlTokens].sort(() => Math.random() - 0.5);
+  
+  shuffled.slice(0, count).forEach((id, i) => {
+    setTimeout(() => fireToken(id), i * (200 + Math.random() * 300));
+  });
+
+  const nextGap = 1400 + Math.random() * 2200;
+  setTimeout(scheduleHighlights, nextGap);
+}
+
+// Start after page settle
+setTimeout(scheduleHighlights, 1800);
+
+const hamburger = document.getElementById('nav-hamburger');
+const navMobile = document.getElementById('nav-mobile');
+hamburger.addEventListener('click', () => {
+  const open = navMobile.classList.toggle('open');
+  document.body.classList.toggle('nav-open', open);
+  const spans = hamburger.querySelectorAll('span');
+  if (open) {
+    spans[0].style.transform = 'rotate(45deg) translate(4px, 4px)';
+    spans[1].style.opacity = '0';
+    spans[2].style.transform = 'rotate(-45deg) translate(4px, -4px)';
+  } else {
+    spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+  }
+});
+</script>
+</body>
+</html>
