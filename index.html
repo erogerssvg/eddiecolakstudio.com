@@ -136,11 +136,11 @@ nav {
   transition: none;
 }
 .hero-frag .hl.pulse {
-  animation: tokenPulse 0.6s ease-in-out forwards;
+  animation: tokenPulse 1.8s ease-in-out forwards;
 }
 @keyframes tokenPulse {
   0%   { color: rgba(242,185,59,0);    background: rgba(242,185,59,0); }
-  30%  { color: rgba(242,185,59,0.9);  background: rgba(242,185,59,0.08); }
+  15%  { color: rgba(242,185,59,0.9);  background: rgba(242,185,59,0.08); }
   70%  { color: rgba(242,185,59,0.9);  background: rgba(242,185,59,0.08); }
   100% { color: rgba(242,185,59,0);    background: rgba(242,185,59,0); }
 }
@@ -707,6 +707,38 @@ footer {
 .nav-mobile a:hover { color: var(--white); }
 body.nav-open { overflow: hidden; }
 
+/* CONTACT CODE FRAGMENTS */
+.contact { position: relative; overflow: hidden; }
+.contact-frag {
+  position: absolute;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px; line-height: 2;
+  pointer-events: none; user-select: none;
+  white-space: pre;
+  z-index: 0;
+}
+.contact-inner { position: relative; z-index: 1; }
+.contact-frag .fline { display: block; color: rgba(255,255,255,0.07); }
+.contact-frag .fkey  { color: rgba(255,255,255,0.09); }
+.contact-frag .fval  { color: rgba(255,255,255,0.09); }
+.contact-frag .fsel  { color: rgba(255,255,255,0.09); }
+.contact-frag .fcom  { color: rgba(255,255,255,0.05); font-style: italic; }
+.contact-frag .fpunc { color: rgba(255,255,255,0.05); }
+.contact-frag .hl {
+  color: rgba(242,185,59,0);
+  background: rgba(242,185,59,0);
+  border-radius: 2px;
+}
+.contact-frag .hl.pulse {
+  animation: tokenPulse 1.8s ease-in-out forwards;
+}
+.contact-frag-1 { left: 1%; top: 15%; opacity: 0.85; }
+.contact-frag-2 { right: 1%; top: 55%; opacity: 0.85; }
+.contact-frag-3 { left: 40%; top: 75%; opacity: 0.6; font-size: 9px; }
+@media (max-width: 900px) {
+  .contact-frag-1, .contact-frag-2, .contact-frag-3 { display: none; }
+}
+
 /* ANIMATIONS */
 @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
 @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
@@ -865,10 +897,10 @@ body.nav-open { overflow: hidden; }
   <div class="hero-inner">
     <div class="hero-eyebrow">Boutique Web Design Studio · Huddersfield, West Yorkshire</div>
     <h1 class="hero-title">
-      BUILT TO IMPRESS.
+      DOES YOUR WEBSITE REPRESENT YOU?
       <span class="hero-title-sub">Every pixel.</span>
     </h1>
-    <p class="hero-sub">Full accountability. Fixed pricing. No account managers, no handoffs, no surprises. Just one person who builds, tests, launches and stands behind every website they produce.</p>
+    <p class="hero-sub">Most websites look like templates because they are. Eddie Colak Studio builds from scratch — no shortcuts, no off-the-shelf themes, no compromises. Just a site that actually looks and feels like your business.</p>
     <div class="hero-btns">
       <a href="#work" class="btn-primary">View Our Work</a>
       <a href="#pricing" class="btn-ghost">See Pricing</a>
@@ -965,15 +997,15 @@ body.nav-open { overflow: hidden; }
         <h2 class="services-title">WHAT WE<br>DELIVER</h2>
       </div>
       <div>
-        <p class="services-intro">Every website is custom built to your brief. We do not use pre-bought templates or generic themes. The design starts from scratch, the code is written by hand and the result is a site that is genuinely yours.</p>
-        <p class="services-intro-detail" style="margin-top:16px;">We work exclusively with WordPress and Elementor for content-managed sites, and hand-coded HTML for portfolio and single-page builds. Both approaches are hosted on Krystal UK servers with Wordfence security and weekly automated backups included as standard on every project.</p>
+        <p class="services-intro">Your website should look like your business — not like a template that could belong to anyone. Everything here is built from scratch, designed to your brief and coded by hand. The result is something that actually represents you.</p>
+        <p class="services-intro-detail" style="margin-top:16px;">The studio works with WordPress and Elementor for sites that need regular content updates, and hand-coded HTML for portfolio and single-page builds where performance and precision matter most. Every project includes UK hosting, security hardening and automated backups as standard.</p>
       </div>
     </div>
     <div class="services-grid">
       <div class="service-card">
         <span class="service-num">// 01</span>
         <div class="service-name">WORDPRESS WEBSITES</div>
-        <p class="service-desc">Custom WordPress builds using Hello Elementor as the base theme. Fully styled to your brand, fully functional and built so you can manage your own content without needing to touch any code. Plugins are selected for purpose, not convenience.</p>
+        <p class="service-desc">A site you can actually update yourself — no developer needed for everyday changes. Built to your brand from scratch, not a theme someone else designed. You get full control over your content without ever touching code.</p>
         <div class="service-tags">
           <span class="service-tag">WordPress</span>
           <span class="service-tag">Elementor</span>
@@ -984,7 +1016,7 @@ body.nav-open { overflow: hidden; }
       <div class="service-card">
         <span class="service-num">// 02</span>
         <div class="service-name">CUSTOM HTML BUILDS</div>
-        <p class="service-desc">Hand coded HTML, CSS and JavaScript for portfolio sites, landing pages or single-page builds where design precision and load speed matter most. No plugins, no bloat, no compromise on performance or visual quality.</p>
+        <p class="service-desc">For businesses where the website is the product — portfolios, studios, agencies. Hand-coded HTML loads faster, looks sharper and gives you complete design freedom. Nothing off the shelf, nothing generic.</p>
         <div class="service-tags">
           <span class="service-tag">HTML5</span>
           <span class="service-tag">CSS3</span>
@@ -995,7 +1027,7 @@ body.nav-open { overflow: hidden; }
       <div class="service-card">
         <span class="service-num">// 03</span>
         <div class="service-name">MOBILE OPTIMISATION</div>
-        <p class="service-desc">Every site is built mobile-first and tested across real devices before launch. Responsive breakpoints, touch-friendly navigation, fast loading images and legible typography at every screen size. Not an afterthought.</p>
+        <p class="service-desc">Most of your visitors are on a phone. If your site doesn't work perfectly on mobile, you're losing them before they've read a word. Every build is tested on real devices — not just resized in a browser window.</p>
         <div class="service-tags">
           <span class="service-tag">Responsive CSS</span>
           <span class="service-tag">Mobile Testing</span>
@@ -1005,7 +1037,7 @@ body.nav-open { overflow: hidden; }
       <div class="service-card">
         <span class="service-num">// 04</span>
         <div class="service-name">SEO SETUP</div>
-        <p class="service-desc">Every site launches with Yoast SEO fully configured. Focus keyphrases, SEO titles and meta descriptions written for every page, XML sitemap generated and submitted to Google Search Console on launch day.</p>
+        <p class="service-desc">A site Google can't find is a site that doesn't exist. Every build launches with Yoast SEO fully configured, keyphrases set, meta descriptions written for every page and the sitemap submitted to Google Search Console on day one.</p>
         <div class="service-tags">
           <span class="service-tag">Yoast SEO</span>
           <span class="service-tag">Search Console</span>
@@ -1016,7 +1048,7 @@ body.nav-open { overflow: hidden; }
       <div class="service-card">
         <span class="service-num">// 05</span>
         <div class="service-name">INTEGRATIONS</div>
-        <p class="service-desc">Live Instagram feeds, booking calendars, WhatsApp click-to-chat, contact forms, social media links, Google Maps. If your business needs it connecting, it gets connected properly and tested before launch.</p>
+        <p class="service-desc">Instagram feeds that update automatically. Booking forms that land straight in your inbox. WhatsApp buttons that open a chat in one tap. Everything your business needs to stay connected to customers — built in and tested before launch.</p>
         <div class="service-tags">
           <span class="service-tag">Instagram API</span>
           <span class="service-tag">WhatsApp</span>
@@ -1027,7 +1059,7 @@ body.nav-open { overflow: hidden; }
       <div class="service-card">
         <span class="service-num">// 06</span>
         <div class="service-name">SECURITY AND BACKUPS</div>
-        <p class="service-desc">Wordfence firewall and malware scanner installed and configured on every WordPress site. Weekly automated backups to Google Drive via UpdraftPlus. UK-based Krystal hosting with Imunify360 server-level protection.</p>
+        <p class="service-desc">A hacked site can disappear overnight. Every WordPress build includes Wordfence firewall, weekly automated backups to Google Drive and UK server-level protection. If something goes wrong, you're covered — and it can be restored fast.</p>
         <div class="service-tags">
           <span class="service-tag">Wordfence</span>
           <span class="service-tag">UpdraftPlus</span>
@@ -1102,7 +1134,7 @@ body.nav-open { overflow: hidden; }
       <div>
         <div class="case-eyebrow">Case Study 01</div>
         <h3 class="case-title">KT DANCE COMPANY</h3>
-        <div class="case-url">ktdanceacademy.co.uk &nbsp;·&nbsp; <a href="https://ktdanceacademy.co.uk" target="_blank">View live site</a></div>
+        <div class="case-url">ktdancecompany.co.uk &nbsp;·&nbsp; <a href="https://ktdancecompany.co.uk" target="_blank">View live site</a></div>
 
         <p class="case-body">KT Dance Company is one of Huddersfield's leading dance schools, offering nine disciplines across junior, intermediate and senior levels. The brief was clear: build something that looked as serious and professional as the studio's reputation. Nothing on the market matched the existing competition.</p>
 
@@ -1132,9 +1164,9 @@ body.nav-open { overflow: hidden; }
 
         <div class="case-section-title">TECHNICAL CHALLENGES</div>
         <div class="case-detail-list">
-          <div class="case-detail-item">Shortcoder character limits required migrating the Competitions page to a direct Elementor HTML widget mid-build</div>
-          <div class="case-detail-item">A server-level hack was discovered and resolved during the build — malicious files were removed, fake admin accounts deleted, Wordfence installed and the site restored from a clean JetBackups snapshot</div>
-          <div class="case-detail-item">The interactive calendar required custom JavaScript to handle dual studio scheduling, day-by-day popups and mobile responsiveness without any plugin dependency</div>
+          <div class="case-detail-item">A plugin limitation mid-build required restructuring the Competitions page entirely — identified early, resolved without any delay to the launch timeline</div>
+          <div class="case-detail-item">A live security breach was discovered and fully resolved during the build — infected files removed, access locked down, firewall installed and the site restored from a clean backup. The client never lost a day of trading</div>
+          <div class="case-detail-item">The class schedule needed to show two studio spaces, seven days a week, with popup class details on every entry — built entirely without plugins so it loads fast, works on every device and can be updated without breaking</div>
         </div>
 
         <div class="case-metrics">
@@ -1163,7 +1195,7 @@ body.nav-open { overflow: hidden; }
           <span class="case-tag">Wordfence</span>
         </div>
 
-        <a href="https://ktdanceacademy.co.uk" target="_blank" class="case-link">View Live Site</a>
+        <a href="https://ktdancecompany.co.uk" target="_blank" class="case-link">View Live Site</a>
       </div>
     </div>
   </div>
@@ -1277,6 +1309,48 @@ body.nav-open { overflow: hidden; }
 </section>
 
 <section class="contact" id="contact">
+
+  <!-- Contact fragment left -->
+  <div class="contact-frag contact-frag-1">
+<span class="fline"><span class="fsel">:root</span><span class="fpunc"> {</span></span>
+<span class="fline">  <span class="fkey">--brand</span><span class="fpunc">:</span> <span class="fval hl" id="hl-ft1-1">#F2B93B</span><span class="fpunc">;</span></span>
+<span class="fline">  <span class="fkey">--dark</span><span class="fpunc">:</span>  <span class="fval">#080808</span><span class="fpunc">;</span></span>
+<span class="fline">  <span class="fkey">--max</span><span class="fpunc">:</span>   <span class="fval hl" id="hl-ft1-2">1400px</span><span class="fpunc">;</span></span>
+<span class="fline"><span class="fpunc">}</span></span>
+<span class="fline"> </span>
+<span class="fline"><span class="fsel">.contact-btn</span><span class="fpunc"> {</span></span>
+<span class="fline">  <span class="fkey">transition</span><span class="fpunc">:</span> <span class="fval">all</span></span>
+<span class="fline">    <span class="fval hl" id="hl-ft1-3">0.3s</span> <span class="fval">ease</span><span class="fpunc">;</span></span>
+<span class="fline">  <span class="fkey">cursor</span><span class="fpunc">:</span> <span class="fval hl" id="hl-ft1-4">pointer</span><span class="fpunc">;</span></span>
+<span class="fline"><span class="fpunc">}</span></span>
+  </div>
+
+  <!-- Contact fragment right -->
+  <div class="contact-frag contact-frag-2">
+<span class="fline"><span class="fcom">// Handle form submission</span></span>
+<span class="fline"><span class="fkey">const</span> <span class="fval hl" id="hl-ft2-1">handleSubmit</span> <span class="fpunc">= async (</span><span class="fval">e</span><span class="fpunc">) => {</span></span>
+<span class="fline">  <span class="fval">e</span><span class="fpunc">.</span><span class="fval hl" id="hl-ft2-2">preventDefault</span><span class="fpunc">();</span></span>
+<span class="fline">  <span class="fkey">const</span> <span class="fval">res</span> <span class="fpunc">=</span> <span class="fkey">await</span></span>
+<span class="fline">    <span class="fval hl" id="hl-ft2-3">fetch</span><span class="fpunc">(</span><span class="fval">action</span><span class="fpunc">,</span> <span class="fval">data</span><span class="fpunc">);</span></span>
+<span class="fline">  <span class="fkey">if</span> <span class="fpunc">(</span><span class="fval">res</span><span class="fpunc">.</span><span class="fval hl" id="hl-ft2-4">ok</span><span class="fpunc">) {</span></span>
+<span class="fline">    <span class="fval">showSuccess</span><span class="fpunc">();</span></span>
+<span class="fline">  <span class="fpunc">}</span></span>
+<span class="fline"><span class="fpunc">};</span></span>
+  </div>
+
+  <!-- Contact fragment centre -->
+  <div class="contact-frag contact-frag-3">
+<span class="fline"><span class="fcom">// Scroll reveal observer</span></span>
+<span class="fline"><span class="fkey">const</span> <span class="fval hl" id="hl-ft3-1">observer</span> <span class="fpunc">= new</span> <span class="fval">IntersectionObserver</span><span class="fpunc">(</span></span>
+<span class="fline">  <span class="fpunc">(</span><span class="fval">entries</span><span class="fpunc">) => {</span></span>
+<span class="fline">    <span class="fval">entries</span><span class="fpunc">.</span><span class="fval hl" id="hl-ft3-2">forEach</span><span class="fpunc">(</span><span class="fval">e</span> <span class="fpunc">=></span></span>
+<span class="fline">      <span class="fval">e</span><span class="fpunc">.</span><span class="fval">target</span><span class="fpunc">.</span><span class="fval hl" id="hl-ft3-3">classList</span></span>
+<span class="fline">        <span class="fpunc">.</span><span class="fval">add</span><span class="fpunc">(</span><span class="fval">'visible'</span><span class="fpunc">)</span></span>
+<span class="fline">    <span class="fpunc">);</span></span>
+<span class="fline">  <span class="fpunc">}</span></span>
+<span class="fline"><span class="fpunc">);</span></span>
+  </div>
+
   <div class="contact-inner">
     <div>
       <div class="contact-eyebrow">Start a Project</div>
@@ -1320,7 +1394,7 @@ body.nav-open { overflow: hidden; }
     <div class="footer-logo">EDDIE COLAK <span>STUDIO</span></div>
     <div class="footer-copy">2026 Eddie Colak Studio. All rights reserved.</div>
     <div class="footer-links">
-      <a href="https://ktdanceacademy.co.uk" target="_blank">KT Dance Company</a>
+      <a href="https://ktdancecompany.co.uk" target="_blank">KT Dance Company</a>
       <a href="#contact">Contact</a>
     </div>
   </div>
@@ -1384,7 +1458,10 @@ const hlTokens = [
   'hl-f3-1','hl-f3-2','hl-f3-3','hl-f3-4','hl-f3-5',
   'hl-f4-1','hl-f4-2','hl-f4-3',
   'hl-f5-1','hl-f5-2','hl-f5-3','hl-f5-4',
-  'hl-f6-1','hl-f6-2','hl-f6-3','hl-f6-4'
+  'hl-f6-1','hl-f6-2','hl-f6-3','hl-f6-4',
+  'hl-ft1-1','hl-ft1-2','hl-ft1-3','hl-ft1-4',
+  'hl-ft2-1','hl-ft2-2','hl-ft2-3','hl-ft2-4',
+  'hl-ft3-1','hl-ft3-2','hl-ft3-3'
 ];
 
 function fireToken(id) {
