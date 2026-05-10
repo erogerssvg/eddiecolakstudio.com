@@ -1201,6 +1201,93 @@ body.nav-open { overflow: hidden; }
   </div>
 </section>
 
+  <!-- BRONCOS EUROPE CASE STUDY -->
+<div class="case-study reveal">
+  <div class="case-code">
+    <div class="code-filename">broncos-europe.js</div>
+    <pre><code><span class="line"><span class="ln">1</span><span class="cm">/* Broncos Europe — Custom Build */</span></span>
+<span class="line"><span class="ln">2</span><span class="kw">function</span> <span class="fn">broncos_live_news</span>() {</span>
+<span class="line"><span class="ln">3</span>  <span class="kw">static</span> $already_run = <span class="kw">false</span>;</span>
+<span class="line"><span class="ln">4</span>  <span class="kw">if</span> ($already_run) <span class="kw">return</span>;</span>
+<span class="line"><span class="ln">5</span>  $already_run = <span class="kw">true</span>;</span>
+<span class="line"><span class="ln">6</span></span>
+<span class="line"><span class="ln">7</span>  <span class="cm">/* Fetch Denver Broncos RSS */</span></span>
+<span class="line"><span class="ln">8</span>  $rss = <span class="fn">fetch_feed</span>(</span>
+<span class="line"><span class="ln">9</span>    <span class="st">'denverbroncos.com/rss'</span></span>
+<span class="line"><span class="ln">10</span>  );</span>
+<span class="line"><span class="ln">11</span></span>
+<span class="line"><span class="ln">12</span>  <span class="cm">/* Filter non-English */</span></span>
+<span class="line"><span class="ln">13</span>  <span class="kw">if</span> (<span class="fn">preg_match</span>(</span>
+<span class="line"><span class="ln">14</span>    <span class="st">'/[áéíóú]/u'</span>,</span>
+<span class="line"><span class="ln">15</span>    $title</span>
+<span class="line"><span class="ln">16</span>  )) <span class="kw">continue</span>;</span>
+<span class="line"><span class="ln">17</span></span>
+<span class="line"><span class="ln">18</span>  <span class="cm">/* Pass to front end */</span></span>
+<span class="line"><span class="ln">19</span>  <span class="kw">echo</span> <span class="st">'&lt;script&gt;'</span>.</span>
+<span class="line"><span class="ln">20</span>    <span class="st">'window.broncosNews='</span>.</span>
+<span class="line"><span class="ln">21</span>    <span class="fn">json_encode</span>($json).</span>
+<span class="line"><span class="ln">22</span>    <span class="st">';&lt;/script&gt;'</span>;</span>
+<span class="line"><span class="ln">23</span>}</span>
+<span class="line"><span class="ln">24</span><span class="fn">add_action</span>(</span>
+<span class="line"><span class="ln">25</span>  <span class="st">'wp_footer'</span>,</span>
+<span class="line"><span class="ln">26</span>  <span class="st">'broncos_live_news'</span></span>
+<span class="line"><span class="ln">27</span>);</span></code></pre>
+    <div class="code-tag">// broncoseurope.co.uk WordPress · Custom CSS/JS/PHP</div>
+  </div>
+  <div class="case-content">
+    <div class="case-label">Case Study 02</div>
+    <h3 class="case-title">BRONCOS EUROPE</h3>
+    <div class="case-meta">broncoseurope.co.uk · <a href="https://broncoseurope.co.uk" target="_blank" class="case-link">View live site</a></div>
+    <p class="case-intro">Broncos Europe is the official home for Denver Broncos fans across the UK and Europe. The brief was to build a premium fan community site from scratch — cohesive, fast and packed with live data integrations that kept fans connected to the team from this side of the Atlantic.</p>
+
+    <div class="case-section-title">THE BRIEF</div>
+    <ul class="case-list">
+      <li>A strong visual identity inspired by the Denver Broncos brand — navy, orange, full-bleed sections and editorial typography</li>
+      <li>Live Denver Broncos news feed pulling directly from the official RSS with automatic rotation and English-language filtering</li>
+      <li>A fully automated podcast page pulling all episodes from YouTube, split into numbered archive and general content</li>
+      <li>An NFL-style team card page with player ratings, stats and bio sections for each team member</li>
+      <li>A members roster page where fans can see the official Broncos Europe member list</li>
+      <li>A merchandise section with category pages ready for Spreadshop integration</li>
+    </ul>
+
+    <div class="case-section-title">WHAT WAS BUILT</div>
+    <ul class="case-list">
+      <li>Six fully custom pages built in WordPress with Elementor Free — Homepage, Podcast, Members, The Team, News and Merch</li>
+      <li>Custom atmospheric hero section with background image, orange radial glow, logo animation and cinematic depth overlays</li>
+      <li>Live score ticker pulling Denver Broncos schedule data from the ESPN API via a custom WPCode PHP snippet</li>
+      <li>Live news feed fetching the official Denver Broncos RSS, filtering Spanish-language content, extracting images and rotating every 30 seconds</li>
+      <li>Podcast page with YouTube RSS feed integration — all 38 episodes parsed automatically, split into numbered archive and extra content, with guest name extraction from video titles</li>
+      <li>NFL Ultimate Team-style player cards on The Team page with ratings, stats, name, role and photo support</li>
+      <li>Broncos Europe Dispatch editorial grid with featured article layout matching the live news feed section</li>
+      <li>Events section with date block, description and CTA — fully editable via the HTML widget</li>
+      <li>YouTube latest videos grid on the homepage pulling the six most recent uploads automatically</li>
+      <li>Smash Balloon Instagram Feed plugin integrated for live social content</li>
+      <li>Spotify embed on both homepage and podcast page with links to Apple Podcasts, YouTube, Amazon Music and Deezer</li>
+      <li>Full Yoast SEO configuration across all pages with sitemap submitted to Google Search Console</li>
+    </ul>
+
+    <div class="case-section-title">TECHNICAL CHALLENGES</div>
+    <ul class="case-list">
+      <li>Twitter/X embeds are entirely blocked in 2026 — the social feed section was rebuilt using YouTube thumbnails and Instagram via Smash Balloon, keeping both feeds live and on-brand</li>
+      <li>The YouTube podcast feed required custom episode parsing logic — extracting episode numbers, guest names and titles from unstructured video titles, then splitting numbered episodes from general content automatically</li>
+      <li>The Denver Broncos RSS feed included Spanish-language articles — a regex filter was built into the PHP snippet to detect and exclude non-English content before it reached the front end</li>
+      <li>Multiple script conflicts caused the news rotation to fire repeatedly — resolved with a static PHP guard and a JavaScript initialisation flag preventing duplicate intervals</li>
+    </ul>
+
+    <div class="case-tags">
+      <span class="tag">WordPress</span>
+      <span class="tag">Custom CSS / JS / PHP</span>
+      <span class="tag">RSS Integration</span>
+      <span class="tag">YouTube API</span>
+      <span class="tag">Spotify Embed</span>
+      <span class="tag">WPCode</span>
+      <span class="tag">Mobile Optimised</span>
+      <span class="tag">Full SEO Setup</span>
+      <span class="tag">Wordfence</span>
+    </div>
+    <a href="https://broncoseurope.co.uk" target="_blank" class="case-cta">View Live Site</a>
+  </div>
+</div>
 <section class="pricing" id="pricing">
   <div class="pricing-inner">
     <div class="pricing-header">
